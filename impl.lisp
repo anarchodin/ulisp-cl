@@ -42,7 +42,7 @@
 (defun ulisp::list-library ()
   (let ((libraries '()))
     (dolist (item *lisp-library* (nreverse libraries))
-      (if (eq (car item) ulisp::defun)
+      (if (eq (car item) 'ulisp::defun)
 	  (push (second item) libraries)))))
 
 (defun ulisp::require (name)
