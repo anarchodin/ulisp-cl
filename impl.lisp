@@ -17,11 +17,11 @@
 
 (defmacro ulisp::defun (name lambda-list &body body)
   "A replacement defun, to deal with uLisp's Lisp-1 tendencies."
-  `(progn
+  `(let ()
      (declare (special ,name))
      (setq ,name (quote (ulisp::defun ,name ,lambda-list ,@body)))
      (setf (symbol-function (quote ,name)) (labels ((,name ,lambda-list ,@body))
-				     (function ,name)))))
+                                             (function ,name)))))
 
 (defun ulisp::funcall (func &rest args)
   "A replacement funcall, to deal with uLisp's Lisp-1 tendencies."
@@ -34,7 +34,7 @@
 (defun ulisp::gc ()
   #+ccl (ccl:gc)
   #+lispworks (hcl:gc-if-needed)
-  #+sbcl (sbcl-ext:gc))
+  #+sbcl (sb-ext:gc))
 
 (defvar *lisp-library* '()
   "Used on microcontroller platforms as a way to provide functions that are ready to go on reset.")
